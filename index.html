@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pulsar HTOL Lifetest Countdown</title>
+    <style>
+        body {
+            background-color: #2a3b4c; /* Dark grey-blue */
+            color: white;
+            font-family: Arial, sans-serif;
+            text-align: center;
+        }
+        .timer-container {
+            background-color: white;
+            border-radius: 10px;
+            display: inline-block;
+            padding: 20px;
+            margin-top: 50px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+        }
+        .timer-header {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        .countdown-days {
+            font-size: 30px;
+            margin-bottom: 10px;
+        }
+        .countdown-full {
+            font-size: 20px;
+        }
+        .company-logo {
+            margin-top: 20px;
+            width: 100px; /* Adjust logo size */
+        }
+    </style>
+</head>
+<body>
+
+    <div class="timer-container">
+        <div class="timer-header">
+            Pulsar HTOL Lifetest starts on...
+        </div>
+        <div class="countdown-days" id="days"></div>
+        <div class="countdown-full" id="full-timer"></div>
+        <img src="company-logo.png" alt="Company Logo" class="company-logo">
+    </div>
+
+    <script>
+        // Ensure the target date is correctly formatted and parsed
+        const targetDate = new Date("March 17, 2025 00:00:00");
+
+        // Log the target date to the console for debugging
+        console.log("Target date: ", targetDate);
+
+        // Check if the date is invalid
+        if (isNaN(targetDate)) {
+            console.error("Invalid target date. Please check the date format.");
+        }
+
+        const countdown = setInterval(function() {
+            const now = new Date().getTime();
+            const distance = targetDate - now;
+
+            // Check the current time and the distance for debugging
+            console.log("Now: ", new Date(now), "Distance: ", distance);
+
+            if (distance < 0) {
+                clearInterval(countdown);
+                document.getElementById("days").innerHTML = "Lifetest Started!";
+                document.getElementById("full-timer").innerHTML = "";
+                console.log("Countdown finished.");
+                return;
+            }
+
+            // Time calculations
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+            // Update the days countdown (just days, no hours/minutes/seconds)
+            document.getElementById("days").innerHTML = `${days} Days`;
+
+            // Update the full countdown (days, hours, minutes, seconds)
+            document.getElementById("full-timer").innerHTML = `${days} Days, ${hours} Hours, ${minutes} Minutes, ${seconds} Seconds`;
+
+        }, 1000);
+    </script>
+
+</body>
+</html>
